@@ -80,17 +80,47 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 4. Initiatives Filter System
-  const filterButtons = document.querySelectorAll('.filter-btn');
+  const initFilterButtons = document.querySelectorAll('#initiatives .filter-btn');
   const initiativeCards = document.querySelectorAll('.initiative-card');
 
-  filterButtons.forEach(button => {
+  initFilterButtons.forEach(button => {
     button.addEventListener('click', () => {
-      filterButtons.forEach(btn => btn.classList.remove('active'));
+      initFilterButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
       
       const filterValue = button.getAttribute('data-filter');
 
       initiativeCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filterValue === 'all' || category === filterValue) {
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 200);
+        }
+      });
+    });
+  });
+
+  // 4b. Open-Source AI & ML Lab Filter System
+  const ossFilterButtons = document.querySelectorAll('#oss-lab .filter-btn');
+  const ossCards = document.querySelectorAll('.oss-card');
+
+  ossFilterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      ossFilterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      const filterValue = button.getAttribute('data-oss-filter');
+
+      ossCards.forEach(card => {
         const category = card.getAttribute('data-category');
         if (filterValue === 'all' || category === filterValue) {
           card.style.display = 'flex';
